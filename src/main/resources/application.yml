@@ -1,0 +1,67 @@
+
+debug: true
+logging:
+  config: classpath:config/logback-spring.xml
+
+spring:
+  datasource:
+    #url: jdbc:mysql://rm-2ze7206bl02h4qj141o.mysql.rds.aliyuncs.com:3306/maggie?useSSL=false
+    #username: maggie
+    #password: Maggie17vip
+    url: jdbc:mysql://localhost:3306/test?useSSL=false
+    username: root
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  data:
+    mongodb:
+      #uri: mongodb://localhost:27017/maggie
+      #uri: mongodb://root:Maggie17vip@39.106.108.232:3717/admin
+      #authentication-database: admin
+      #database: maggie
+      uri: mongodb://localhost:27017
+      database: test
+      #host: 39.106.108.232
+      #port: 3717
+      #username: root
+      #password: Maggie17vip
+      #authentication-database: admin
+      #database: maggie
+
+
+
+
+  redis:
+    database: 0
+    #host: 39.106.108.232
+    #port: 6379
+    #password: Maggie17vip
+    host: localhost
+    port: 6379
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+    timeout: 0
+
+
+web:
+  auth:
+    notAuthUrl:
+      - "registCode"
+      - "validMobile"
+      - "cert"
+      - "toLogin"
+      - "login"
+      - "logout"
+#      - "websocket"
+      - "sessInvalid"
+      - "index"
+    sessionInvalid: "sessInvalid"
+
+account:
+  plat: "maggie"
