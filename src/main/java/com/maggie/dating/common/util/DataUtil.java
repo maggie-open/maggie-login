@@ -1,7 +1,5 @@
 package com.maggie.dating.common.util;
 
-import com.maggie.dating.beans.Buyer;
-
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
