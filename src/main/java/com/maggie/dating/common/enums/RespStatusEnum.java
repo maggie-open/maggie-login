@@ -17,13 +17,7 @@ public enum RespStatusEnum {
     CA_CIPHER("3010","密文错误"),
     CA_USER_NO("3020","用户不存在"),
     CA_TIME_NO("3030","用户证书已过期"),
-    CA_VALID_ERROR("3040","登录失败，验签不通过"),
-    //oss:4000
-    OSS_ERROR("4000","OSS请求异常"),
-
-    //IM:5000
-    IM_ERROR("5000","IM请求异常");
-
+    CA_VALID_ERROR("3040","登录失败，验签不通过");
 
     private String code;
     private String mark;
