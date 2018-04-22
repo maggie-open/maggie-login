@@ -1,4 +1,4 @@
-package vip.maggie.dating.common.exception;
+package com.maggie.dating.common.exception;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
