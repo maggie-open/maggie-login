@@ -14,13 +14,13 @@ Application server of Maggie has a built-in official CA root certificate, which 
 Instead of using traditional username & password, Maggie selects key-authentication method to login. That means, server verifies user certification and send random challenge message every time when connection is established, then APP use its private key to decrypt, encrypt again and send it back to server for authentication.
 <br/><br/>
 <div align="center">
-  <img src="https://github.com/WuShengRan/maggie-login/blob/master/pictures/architecture.png" width = "621" height = "595" alt="Login_Arch" /></div>
+  <img src="https://github.com/maggie-open/maggie-login/blob/master/pictures/architecture.png" width = "621" height = "595" alt="Login_Arch" /></div>
 
 ## Login Process
 1.	Open APP, send request for SMS verification code
 2.	Server checks whether the phone number is registered. If already registered, use certification issued by CA center to login. If not, enter the register process.
 <br/><br/>
-![Login_Proc](https://github.com/WuShengRan/maggie-login/blob/master/pictures/process.png)
+![Login_Proc](https://github.com/maggie-open/maggie-login/blob/master/pictures/process.png)
 ### Register process:
 1.	Download server certification first to establish https connection
 2.	Generate private and public key locally
