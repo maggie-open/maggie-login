@@ -31,20 +31,6 @@ public class SessionFilter  implements Filter{
     public void init(FilterConfig filterConfig) throws ServletException {
     }
 
-
-    /**
-     * 判断是否不需要认证页面
-     * @param url
-     * @return
-     */
-    private boolean isNotAuthUrl(String url){
-        for(String str:notAuthUrl){
-            if(url.contains(str))
-                return true;
-        }
-        return false;
-    }
-
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
@@ -62,6 +48,19 @@ public class SessionFilter  implements Filter{
             return;
         }
         chain.doFilter(request, response);
+    }
+
+    /**
+     * 判断是否不需要认证页面
+     * @param url
+     * @return
+     */
+    private boolean isNotAuthUrl(String url){
+        for(String str:notAuthUrl){
+            if(url.contains(str))
+                return true;
+        }
+        return false;
     }
 
     @Override
