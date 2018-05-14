@@ -46,12 +46,6 @@ public class UserServiceImpl implements UserService{
     private RedisService redisService;
 
     @Autowired
-    private BuyerService buyerService;
-
-    @Autowired
-    private SellerService sellerService;
-
-    @Autowired
     private CAService caService;
 
     @Autowired
@@ -67,29 +61,29 @@ public class UserServiceImpl implements UserService{
         String dataStr = reqData==null?null:reqData.getData();
         Map<String,String> dataMap = (Map<String, String>) JsonUtil.jsonStrToBean(dataStr, HashMap.class);
         String mobile = dataMap == null?"":dataMap.get("mobile");
-        if(ValidatorUtil.isMobile(mobile)){
-            //判断此手机号是否可以发送
-            boolean canSend = redisService.canSendSmsCode(session.getId(),mobile);
-            if(canSend){
-                //发送短信验证码
-                String registCode = ValidCodeUtil.getRandomStr(Constants.REGIST_CODE);
-                session.setAttribute(Constants.SESSION_MOBILE,mobile);
-                session.setAttribute(Constants.SESSION_REGCODE,registCode);
-                session.setAttribute(Constants.SESSION_VALIDCOUNT,0);
-                //验证状态为false
-                session.setAttribute(Constants.SESSION_VALIDSTATUS,"false");
-                resp.setStatus(RespStatusEnum.SUCCESS.getCode());
-                resp.setMsg("动态验证码已发送到【"+mobile+"】");
-                //存入redis
-                redisService.sendSmsCode(session.getId(),mobile,registCode);
-                logger.info("【"+mobile+"】发送注册验证码["+registCode+"]");
-            }else{
-                resp.setMsg("该手机号今日发送短信次数已超限");
-            }
-
-        }else{
-            resp.setMsg("手机号异常");
-        }
+//        if(ValidatorUtil.isMobile(mobile)){
+//            //判断此手机号是否可以发送
+//            boolean canSend = redisService.canSendSmsCode(session.getId(),mobile);
+//            if(canSend){
+//                //发送短信验证码
+//                String registCode = ValidCodeUtil.getRandomStr(Constants.REGIST_CODE);
+//                session.setAttribute(Constants.SESSION_MOBILE,mobile);
+//                session.setAttribute(Constants.SESSION_REGCODE,registCode);
+//                session.setAttribute(Constants.SESSION_VALIDCOUNT,0);
+//                //验证状态为false
+//                session.setAttribute(Constants.SESSION_VALIDSTATUS,"false");
+//                resp.setStatus(RespStatusEnum.SUCCESS.getCode());
+//                resp.setMsg("动态验证码已发送到【"+mobile+"】");
+//                //存入redis
+//                redisService.sendSmsCode(session.getId(),mobile,registCode);
+//                logger.info("【"+mobile+"】发送注册验证码["+registCode+"]");
+//            }else{
+//                resp.setMsg("该手机号今日发送短信次数已超限");
+//            }
+//
+//        }else{
+//            resp.setMsg("手机号异常");
+//        }
         return resp;
     }
 
@@ -268,22 +262,19 @@ public class UserServiceImpl implements UserService{
         Map<String,String> dataMap = (Map<String, String>) JsonUtil.jsonStrToBean(dataStr, HashMap.class);
         String cert = dataMap!=null?DataUtil.getString(dataMap.get("cert")):null;
         RespDataVo certRes = caService.toCertValidation(cert,code);
-//        if(certRes!=null&&(RespStatusEnum.SUCCESS.getCode()).equalsIgnoreCase(certRes.getStatus())){
-//            resp.setStatus(RespStatusEnum.SUCCESS.getCode());
-//            Map<String,String> certMap = (Map<String, String>) JsonUtil.jsonStrToBean(certRes.getData(), HashMap.class);
-//            session.setAttribute(Constants.SESSION_MOBILE,certMap.get(Constants.SESSION_MOBILE));
-//            session.setAttribute(Constants.SESSION_EQUITCODE,certMap.get(Constants.SESSION_EQUITCODE));
-//
-//            Map<String,String> respDataMap = new HashMap<String,String>();
-//            respDataMap.put("validMsg",certMap.get("key"));
-//            resp.setData(JsonUtil.beanToJsonStr(respDataMap));
-//            resp.setMsg("验证信息已发送");
-//        }else{
-//            resp.setStatus(RespStatusEnum.FAIL.getCode());
-//            resp.setMsg(certRes.getMsg());
-//        }
-        if(true){
-            resp.setMsg("success");
+        if(certRes!=null&&(RespStatusEnum.SUCCESS.getCode()).equalsIgnoreCase(certRes.getStatus())){
+            resp.setStatus(RespStatusEnum.SUCCESS.getCode());
+            Map<String,String> certMap = (Map<String, String>) JsonUtil.jsonStrToBean(certRes.getData(), HashMap.class);
+            session.setAttribute(Constants.SESSION_MOBILE,certMap.get(Constants.SESSION_MOBILE));
+            session.setAttribute(Constants.SESSION_EQUITCODE,certMap.get(Constants.SESSION_EQUITCODE));
+
+            Map<String,String> respDataMap = new HashMap<String,String>();
+            respDataMap.put("validMsg",certMap.get("key"));
+            resp.setData(JsonUtil.beanToJsonStr(respDataMap));
+            resp.setMsg("验证信息已发送");
+        }else{
+            resp.setStatus(RespStatusEnum.FAIL.getCode());
+            resp.setMsg(certRes.getMsg());
         }
         return resp;
     }
