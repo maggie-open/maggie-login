@@ -22,15 +22,15 @@ public interface UserService {
 
     RespDataVo getUserCert(HttpSession session, ReqDataVo reqData);
 
-    RespDataVo getOssToken(HttpSession session, ReqDataVo reqData);
-
-    RespDataVo getUserPubKey(HttpSession session, ReqDataVo reqData);
-
     RespDataVo toLogin(HttpSession session, ReqDataVo reqData);
 
     RespDataVo login(HttpSession session, ReqDataVo reqData);
 
     RespDataVo logout(HttpSession session, ReqDataVo reqData);
+
+    RespDataVo getOssToken(HttpSession session, ReqDataVo reqData);
+
+    RespDataVo getUserPubKey(HttpSession session, ReqDataVo reqData);
 
     RespDataVo updateOrderTxStatus(HttpSession session, ReqDataVo reqData);
 
