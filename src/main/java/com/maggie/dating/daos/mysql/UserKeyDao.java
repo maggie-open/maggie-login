@@ -18,16 +18,6 @@ public interface UserKeyDao extends CrudRepository<UserKey,Long> {
     UserKey findByMobileAndEquipmentCode(@Param("mobile")String mobile,@Param("equipmentCode")String equipmentCode);
 
     /**
-     * 根据用户手机号 设备码 公钥 查找激活状态的证书
-     * @param mobile
-     * @param equipmentCode
-     * @param publicKey
-     * @param status
-     * @return
-     */
-    UserKey findByMobileAndEquipmentCodeAndPublicKeyAndStatus(@Param("mobile")String mobile,@Param("equipmentCode")String equipmentCode,@Param("publicKey")String publicKey,@Param("status")Integer status);
-
-    /**
      * 根据手机号检索用户密钥信息
      * @param mobile
      * @return
@@ -42,5 +32,14 @@ public interface UserKeyDao extends CrudRepository<UserKey,Long> {
      */
     UserKey findByUserIdAndStatus(@Param("userId")String userId,@Param("status")Integer status);
 
+    /**
+     * 根据用户手机号 设备码 公钥 查找激活状态的证书
+     * @param mobile
+     * @param equipmentCode
+     * @param publicKey
+     * @param status
+     * @return
+     */
+    UserKey findByMobileAndEquipmentCodeAndPublicKeyAndStatus(@Param("mobile")String mobile,@Param("equipmentCode")String equipmentCode,@Param("publicKey")String publicKey,@Param("status")Integer status);
 
 }
