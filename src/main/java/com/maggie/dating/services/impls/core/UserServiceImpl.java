@@ -46,6 +46,12 @@ public class UserServiceImpl implements UserService{
     private RedisService redisService;
 
     @Autowired
+    private BuyerService buyerService;
+
+    @Autowired
+    private SellerService sellerService;
+
+    @Autowired
     private CAService caService;
 
     @Autowired
