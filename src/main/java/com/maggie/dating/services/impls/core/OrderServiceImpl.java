@@ -145,6 +145,38 @@ public class OrderServiceImpl implements OrderService{
     }
 
 
+    @Override
+    public Map<String, Object> findOrderVoByOrderId(Long orderId) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT t1.id as order_id, t1.buyer_id, t1.message, t1.place,");
+        sql.append("t1.date_time, t1.expiration, t1.geo, t1.is_anonymous,");
+        sql.append("date_format(t1.order_time,'%Y-%m-%d %H:%i:%s'), t1.subject, t2.seller_id,  t2.amount,");
+        sql.append("t2.status,t2.id as tx_id FROM t_user_order t1 ");
+        sql.append("left join t_order_transaction t2 on t2.order_id = t1.id ");
+
+        sql.append("where t1.id ="+orderId+" ");
+
+        List order =  basicDao.findBySql(sql.toString());
+
+        String[] keys = new String[]{"orderId","buyerId","message","place"
+                ,"dateTime","expiration","geo","isAnonymous","orderTime",
+                "subject","sellerId","amount","status","txId"};
+
+        List<Map<String,Object>> orderInfo = PageDataUtil.convertPageDateResult(order,keys);
+
+        Map<String,Object> orderMap = orderInfo!=null?orderInfo.get(0):null;
+        if(orderMap!=null){
+            String sellerId = DataUtil.getString(orderMap.get("sellerId"));
+            Seller seller = null;
+            if(DataUtil.isNotEmpty(sellerId)){
+                seller = sellerDao.findOne(sellerId);
+            }
+            orderMap.put("seller",seller);
+            orderMap.put("buyer",buyerDao.findOne(DataUtil.getString(orderMap.get("buyerId"))));
+        }
+
+        return orderMap;
+    }
 
     @Override
     public void dealWithOrder(OrderTransaction otx) {
@@ -212,40 +244,6 @@ public class OrderServiceImpl implements OrderService{
             Map<String,Object> orderInfo = this.componentChosenOrderInfo(orderId,sellerId,OrderPushStatusEnum.REMAIN_CHOOSE.getCode());
             messageNotifyService.notifySellerHasChosen(sellerId,orderInfo);
         }
-    }
-
-
-    @Override
-    public Map<String, Object> findOrderVoByOrderId(Long orderId) {
-        StringBuilder sql = new StringBuilder();
-        sql.append("SELECT t1.id as order_id, t1.buyer_id, t1.message, t1.place,");
-        sql.append("t1.date_time, t1.expiration, t1.geo, t1.is_anonymous,");
-        sql.append("date_format(t1.order_time,'%Y-%m-%d %H:%i:%s'), t1.subject, t2.seller_id,  t2.amount,");
-        sql.append("t2.status,t2.id as tx_id FROM t_user_order t1 ");
-        sql.append("left join t_order_transaction t2 on t2.order_id = t1.id ");
-
-        sql.append("where t1.id ="+orderId+" ");
-
-        List order =  basicDao.findBySql(sql.toString());
-
-        String[] keys = new String[]{"orderId","buyerId","message","place"
-                ,"dateTime","expiration","geo","isAnonymous","orderTime",
-                "subject","sellerId","amount","status","txId"};
-
-        List<Map<String,Object>> orderInfo = PageDataUtil.convertPageDateResult(order,keys);
-
-        Map<String,Object> orderMap = orderInfo!=null?orderInfo.get(0):null;
-        if(orderMap!=null){
-            String sellerId = DataUtil.getString(orderMap.get("sellerId"));
-            Seller seller = null;
-            if(DataUtil.isNotEmpty(sellerId)){
-                seller = sellerDao.findOne(sellerId);
-            }
-            orderMap.put("seller",seller);
-            orderMap.put("buyer",buyerDao.findOne(DataUtil.getString(orderMap.get("buyerId"))));
-        }
-
-        return orderMap;
     }
 
     public Map<String,Object> componentChosenOrderInfo(String orderIdStr,String sellerId,String statusStr){
