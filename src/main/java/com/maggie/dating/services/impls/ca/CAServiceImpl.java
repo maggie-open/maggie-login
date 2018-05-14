@@ -102,6 +102,18 @@ public class CAServiceImpl implements CAService{
         return returnMsgDealWith(RespStatusEnum.SUCCESS.getMark(), RespStatusEnum.SUCCESS.getCode(),jsonStr,userId);
     }
 
+
+
+    public RespDataVo queryUserPublicKey(String userId){
+        UserKey userKey = userKeyDao.findByUserIdAndStatus(userId,1);
+        if(DataUtil.isNotEmpty(userKey)){
+            String jsonStr =DataUtil.replaceBlank(userKey.getPublicKey());//ObjectTurnMap.classToJson(userKey);
+            return returnMsgDealWith(RespStatusEnum.SUCCESS.getMark(), RespStatusEnum.SUCCESS.getCode(),jsonStr,DataUtil.StringUtil(userKey.getUserId()));
+        }else{
+            return returnMsgDealWith(RespStatusEnum.CA_USER_NO.getMark(), RespStatusEnum.CA_USER_NO.getCode(),null,null);
+        }
+    }
+
     @Override
     @Transient
     public RespDataVo certValidation(String poKey, String mobile, String equitCode, String random) {
@@ -127,17 +139,6 @@ public class CAServiceImpl implements CAService{
             return returnMsgDealWith(RespStatusEnum.CA_VALID_ERROR.getMark(), RespStatusEnum.CA_VALID_ERROR.getCode(),null,null);
         }
     }
-
-    public RespDataVo queryUserPublicKey(String userId){
-        UserKey userKey = userKeyDao.findByUserIdAndStatus(userId,1);
-        if(DataUtil.isNotEmpty(userKey)){
-            String jsonStr =DataUtil.replaceBlank(userKey.getPublicKey());//ObjectTurnMap.classToJson(userKey);
-            return returnMsgDealWith(RespStatusEnum.SUCCESS.getMark(), RespStatusEnum.SUCCESS.getCode(),jsonStr,DataUtil.StringUtil(userKey.getUserId()));
-        }else{
-            return returnMsgDealWith(RespStatusEnum.CA_USER_NO.getMark(), RespStatusEnum.CA_USER_NO.getCode(),null,null);
-        }
-    }
-
 
     @Override
     public RespDataVo queryUserCert(String mobile, String equipCode, String pubKey) {
