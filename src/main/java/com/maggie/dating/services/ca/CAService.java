@@ -21,6 +21,13 @@ public interface CAService {
     RespDataVo toCertValidation(String cert, String code);
 
     /**
+     * 查找用户设备证书
+     * @param
+     * @return
+     */
+    RespDataVo queryUserCert(String mobile,String equipCode,String pubKey);
+
+    /**
      * 会话验证
      * @param poKey
      * @param mobile
@@ -36,13 +43,5 @@ public interface CAService {
      * @return
      */
     RespDataVo queryUserPublicKey(String userId);//参数变更为userId
-
-
-    /**
-     * 查找用户设备证书
-     * @param
-     * @return
-     */
-    RespDataVo queryUserCert(String mobile,String equipCode,String pubKey);
 
 }
