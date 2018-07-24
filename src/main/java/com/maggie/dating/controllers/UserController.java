@@ -111,6 +111,19 @@ public class UserController {
         return respData;
     }
 
+    /**
+     * 获取指定用户的公钥，供加密会话使用
+     * @param session
+     * @param reqData data{userId}
+     * @return data{pubKey}
+     */
+    @PostMapping("/getPubKey")
+    public RespDataVo getPubKey(HttpSession session , ReqDataVo reqData){
+        RespDataVo respData = null;
+        //已成功登录的用户，获取指定用户的公钥
+        respData = userService.getUserPubKey(session,reqData);
+        return respData;
+    }
 
     /**
      * 获取文件服务器token
@@ -126,18 +139,5 @@ public class UserController {
         return respData;
     }
 
-    /**
-     * 获取指定用户的公钥，供加密会话使用
-     * @param session
-     * @param reqData data{userId}
-     * @return data{pubKey}
-     */
-    @PostMapping("/getPubKey")
-    public RespDataVo getPubKey(HttpSession session , ReqDataVo reqData){
-        RespDataVo respData = null;
-        //已成功登录的用户，获取指定用户的公钥
-        respData = userService.getUserPubKey(session,reqData);
-        return respData;
-    }
 
 }
