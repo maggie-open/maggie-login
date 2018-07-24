@@ -138,6 +138,17 @@ public class CAServiceImpl implements CAService{
         }
     }
 
+    public String getRandomString(int length,String flag) {
+        String base = "abcdefghijklmnopqrstuvwxyz123456789";
+        base = base.replace(flag, "");
+        Random random = new Random();
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < length; i++) {
+            int number = random.nextInt(base.length());
+            sb.append(base.charAt(number));
+        }
+        return sb.toString();
+    }
 
     @Override
     public RespDataVo queryUserCert(String mobile, String equipCode, String pubKey) {
@@ -199,16 +210,4 @@ public class CAServiceImpl implements CAService{
         return vo;
     }
 
-
-    public String getRandomString(int length,String flag) {
-        String base = "abcdefghijklmnopqrstuvwxyz123456789";
-        base = base.replace(flag, "");
-        Random random = new Random();
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < length; i++) {
-            int number = random.nextInt(base.length());
-            sb.append(base.charAt(number));
-        }
-        return sb.toString();
-    }
 }
