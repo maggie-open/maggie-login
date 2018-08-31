@@ -35,7 +35,6 @@ public class UserController {
         return respData;
     }
 
-
     /**
      * 验证手机号与动态验证码是否匹配，验证该手机号的用户类型
      * @param session
@@ -49,7 +48,6 @@ public class UserController {
         respData = userService.validUserMobile(session,reqData);
         return respData;
     }
-
 
     /**
      * 申请平台通行证
@@ -65,7 +63,6 @@ public class UserController {
         return respData;
     }
 
-
     /**
      * 准备使用通行证登录平台：验证证书，发送验证私钥信息
      * @param session 保存用户登录信息 cert validMsg
@@ -79,7 +76,6 @@ public class UserController {
         respData = userService.toLogin(session,reqData);
         return respData;
     }
-
 
     /**
      * 使用通行证登录平台,验证私钥解密信息是否正确
@@ -96,11 +92,10 @@ public class UserController {
         return respData;
     }
 
-
     /**
-     * 使用通行证登录平台,验证私钥解密信息是否正确
+     * 登出
      * @param session
-     * @param reqData data{poKey}
+     * @param reqData
      * @return
      */
     @PostMapping("/logout")
