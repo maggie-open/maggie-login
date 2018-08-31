@@ -152,7 +152,6 @@ public class CAServiceImpl implements CAService{
 
     @Override
     public RespDataVo queryUserCert(String mobile, String equipCode, String pubKey) {
-
         UserKey userKey = userKeyDao.findByMobileAndEquipmentCodeAndPublicKeyAndStatus(mobile,equipCode,pubKey,1);
         String cert = userKey!=null?userKey.getUserCa():null;
         if(DataUtil.isNotEmpty(cert)){

@@ -11,18 +11,18 @@ import java.util.List;
 public interface UserKeyDao extends CrudRepository<UserKey,Long> {
 
     /**
-     * 根据手机号码和设备号检索用户
-     * @param mobile
-     * @return
-     */
-    UserKey findByMobileAndEquipmentCode(@Param("mobile")String mobile,@Param("equipmentCode")String equipmentCode);
-
-    /**
      * 根据手机号检索用户密钥信息
      * @param mobile
      * @return
      */
     List<UserKey> findByMobile(@Param("mobile")String mobile);
+
+    /**
+     * 根据手机号码和设备号检索用户
+     * @param mobile
+     * @return
+     */
+    UserKey findByMobileAndEquipmentCode(@Param("mobile")String mobile,@Param("equipmentCode")String equipmentCode);
 
     /**
      * 根据手机号状态检索数据
