@@ -74,7 +74,6 @@ public class BasicDaoImpl implements BasicDao {
 	{
 		return entityManager.createQuery(hql).getResultList();
 	}
-	
 
 	public PageData  findPageBySql(String sql, int pageSize, int page) {
 		PageData pageData = new PageData();
@@ -90,15 +89,7 @@ public class BasicDaoImpl implements BasicDao {
 		pageData.setResult(temp);
 		return pageData;
 	}
-
-	public List findBySql(String sql) {
-		return entityManager.createNativeQuery(sql).getResultList();
-	}
-
-	public <T> List<T> findBySql(String sql, Class resultClass) {
-		return entityManager.createNativeQuery(sql,resultClass).getResultList();
-	}
-
+	
 	public <T> List<T>  prepareCall(String prepareSql) {
 		return entityManager.createNativeQuery(prepareSql).getResultList();
 	}
@@ -109,6 +100,14 @@ public class BasicDaoImpl implements BasicDao {
 
 	public int prepareCallNoResult(String prepareSql) {
 		return entityManager.createNativeQuery(prepareSql).executeUpdate();
+	}
+
+	public List findBySql(String sql) {
+		return entityManager.createNativeQuery(sql).getResultList();
+	}
+
+	public <T> List<T> findBySql(String sql, Class resultClass) {
+		return entityManager.createNativeQuery(sql,resultClass).getResultList();
 	}
 
 	public int executeSql(String sql) {
