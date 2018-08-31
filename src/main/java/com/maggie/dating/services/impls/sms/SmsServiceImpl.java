@@ -52,31 +52,6 @@ public class SmsServiceImpl implements SmsService {
         return 0;
     }
 
-    @Override
-    public int sendValidCode(String mobile, String code) {
-        Map<String, String> map = new HashMap<String, String>();
-        SendSmsResponse smb = null;
-        Integer results = 0;
-        try {
-            map.put("code", code);
-            smb = sendSms(mobile, SMSTemplateCode_validCode, JsonUtil.mapToJson(map));
-            System.out.println("短信接口返回的数据----------------");
-            System.out.println("Code=" + smb.getCode());
-            System.out.println("Message=" + smb.getMessage());
-            System.out.println("RequestId=" + smb.getRequestId());
-            System.out.println("BizId=" + smb.getBizId());
-            if (smb.getCode().equals("OK")) {
-                return 0;
-            } else {
-                return 1;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.info("验证码发送发生异常，异常信息：" + e.getMessage());
-            return 1;
-        }
-    }
-
     public SendSmsResponse sendSms(String mobile, String smsTemplateCode, String msgJsonStr) throws Exception {
         //可自助调整超时时间
         System.setProperty("sun.net.client.defaultConnectTimeout", defaultConnectTimeout);
@@ -102,5 +77,30 @@ public class SmsServiceImpl implements SmsService {
         //hint 此处可能会抛出异常，注意catch
         SendSmsResponse sendSmsResponse = acsClient.getAcsResponse(request);
         return sendSmsResponse;
+    }
+
+    @Override
+    public int sendValidCode(String mobile, String code) {
+        Map<String, String> map = new HashMap<String, String>();
+        SendSmsResponse smb = null;
+        Integer results = 0;
+        try {
+            map.put("code", code);
+            smb = sendSms(mobile, SMSTemplateCode_validCode, JsonUtil.mapToJson(map));
+            System.out.println("短信接口返回的数据----------------");
+            System.out.println("Code=" + smb.getCode());
+            System.out.println("Message=" + smb.getMessage());
+            System.out.println("RequestId=" + smb.getRequestId());
+            System.out.println("BizId=" + smb.getBizId());
+            if (smb.getCode().equals("OK")) {
+                return 0;
+            } else {
+                return 1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.info("验证码发送发生异常，异常信息：" + e.getMessage());
+            return 1;
+        }
     }
 }
