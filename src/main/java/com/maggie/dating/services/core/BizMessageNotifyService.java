@@ -37,12 +37,12 @@ public interface BizMessageNotifyService {
      * @param sellerId
      * @param orderInfo
      */
-    void notifySellerHasChosenFial(String sellerId, Map<String, Object> orderInfo);
+    void notifySellerHasChosenFail(String sellerId, Map<String, Object> orderInfo);
 
     /**
      * 通知相关卖家 买家确定抢单失败
      * @param sellerIds
      * @param orderInfo
      */
-    void notifySellerHasChosenFial(List<String> sellerIds, Map<String, Object> orderInfo);
+    void notifySellerHasChosenFail(List<String> sellerIds, Map<String, Object> orderInfo);
 }

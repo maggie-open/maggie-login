@@ -43,7 +43,6 @@ public class BizMessageNotifyImpl implements BizMessageNotifyService{
         }catch (Exception e){
             logger.error(e.getMessage());
         }
-
     }
 
     @Override
@@ -105,7 +104,7 @@ public class BizMessageNotifyImpl implements BizMessageNotifyService{
     }
 
     @Override
-    public void notifySellerHasChosenFial(String sellerId, Map<String, Object> orderInfo) {
+    public void notifySellerHasChosenFail(String sellerId, Map<String, Object> orderInfo) {
         try {
             //component sms
             WssDataVo wssDataVo = new WssDataVo();
@@ -125,7 +124,7 @@ public class BizMessageNotifyImpl implements BizMessageNotifyService{
 
 
     @Override
-    public void notifySellerHasChosenFial(List<String> sellerIds, Map<String, Object> orderInfo) {
+    public void notifySellerHasChosenFail(List<String> sellerIds, Map<String, Object> orderInfo) {
         try {
             //component sms
             WssDataVo wssDataVo = new WssDataVo();
